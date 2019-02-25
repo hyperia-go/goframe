@@ -1,0 +1,58 @@
+Series
+------------------------------------
+------------------------------------
+
+Properties
+__________
+
+- index - ascending order index of elements
+- indexing - get value at a certain index
+- NaN - null values
+
+Methods
+_______
+
+- abs
+- all - return whether all values in the series are true
+- append - concatenate two or more series
+- apply - apply a function to each value in the series
+- where - get all values which fill a condition
+    - geq, ge, leq, le, eq - all will need to be called from where. Elementwise comparisons.
+    -  ^    ^   ^    ^   ^
+      >=    >  <=    <   ==
+    - nonzero - return true where values are non zero
+- copy - return a copied series
+- count - return the number of non Nan values
+- cummax, cummin, cumsum, cumprod - return a series containing the cumulative values. See pandas for explaination
+- diff - difference between each element and its subsequent element
+- dot - dot product of two series
+- hist - histogram of the series
+- shift - shift all values down or up in index by some value
+- mean
+- median
+- std
+- var
+- percentile - find percentiles of the data
+- rolling - find rolling window calculations
+- to_csv
+- to_excel
+- to_sql ** VERY HARD
+- unique - all unique values in the series
+- nunique - number of unique values in the series
+- plotting ** VERY HARD
+
+Testing
+_______
+- Each test should show that the dataframe has not been modified from the original one, if necessary.
+
+Notes
+_____
+
+We will also have to implement threading for many of these methods when data gets too big. Definitely something for later in the pipeline...
+
+Documentation
+------------------------------------
+------------------------------------
+
+- Doc strings for each of the methods and functions implemented
+- Dynamic documentation
