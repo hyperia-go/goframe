@@ -116,3 +116,39 @@ func (series Series) Sum() (float64, error) {
   }
   return sum, nil
 }
+
+func (series Series) Product() (float64, error) {
+  if !is_numeric(series.Type) {
+      return float64(0), errors.New("ArithmeticError: can only add numeric types")
+  }
+  prod := float64(1)
+  for _, x := range series.Get() {
+    switch x.(type) {
+    case uint8:
+        prod *= float64(x.(uint8))
+    case int8:
+        prod *= float64(x.(uint8))
+    case uint16:
+        prod *= float64(x.(uint16))
+    case int16:
+        prod *= float64(x.(int16))
+    case uint32:
+        prod *= float64(x.(uint32))
+    case int32:
+        prod *= float64(x.(int32))
+    case uint64:
+        prod *= float64(x.(uint64))
+    case int64:
+        prod *= float64(x.(int64))
+    case int:
+        prod *= float64(x.(int))
+    case float32:
+        prod *= float64(x.(float32))
+    case float64:
+        prod *= float64(x.(float64))
+    default:
+        return 0, errors.New("ArithmeticError: can only add numeric types")
+     }
+  }
+  return prod, nil
+}

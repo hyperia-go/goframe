@@ -102,3 +102,24 @@ func TestSum(t *testing.T) {
     t.Errorf("Error: %+v (<nil> expected). Expected sum %f got %f", err_float, expected_float, sum_float)
   }
 }
+
+func TestProduct(t *testing.T) {
+
+  // Test product with ints
+  s_int, _ := createSmallNumericIntSeries(t)
+  prod, err := s_int.Product()
+  expected := float64(1 * 2 * 3 * 4 * 5)
+  if err != nil || prod != expected {
+    t.Errorf("Error: %+v (<nil> expected). Expected product %f got %f", err, expected, prod)
+  }
+
+  // Test product with floats
+  s_float, _ := createSmallNumericFloatSeries(t)
+  prod_float, err_float := s_float.Product()
+  expected_float := float64(0.1 * 0.2 * 0.3 * 0.4 * 0.5)
+
+  // TODO: deal with floating point precision problems.
+  if err_float != nil || prod_float - expected_float > 0.0001 {
+    t.Errorf("Error: %+v (<nil> expected). Expected product %f got %f", err_float, expected_float, prod_float)
+  }
+}
