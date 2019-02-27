@@ -14,7 +14,7 @@ var _ = reflect.TypeOf(0)
 
 type Series struct {
   Name string
-  Values Elements
+  Elements Elements
   Type reflect.Type
 }
 
@@ -69,13 +69,13 @@ func SeriesInit(name string, data []interface{}, t reflect.Type) (Series, error)
     s_data[i] = Element{Val: data[i]}
   }
   elems := Elements{Vals: s_data}
-  s.Values = elems
+  s.Elements = elems
   return s, nil
 }
 
 func (series Series) Get() []interface{} {
-  ret := make([]interface{}, series.Values.Len())
-  for i, v := range series.Values.Vals {
+  ret := make([]interface{}, series.Elements.Len())
+  for i, v := range series.Elements.Vals {
     ret[i] = v.Val
   }
   return ret
