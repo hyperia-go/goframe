@@ -61,7 +61,7 @@ func (elements Elements) Len() int {
 // ------------------------------------------
 func SeriesInit(name string, data []interface{}, t reflect.Type) (Series, error) {
   if len(data) == 0 {
-    return Series{}, errors.New("EmptyFrame")
+    return Series{Name: name}, errors.New("EmptyFrame")
   }
   s := Series{Name: name, Type: t}
   s_data := make([]Element, len(data))
