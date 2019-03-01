@@ -3,7 +3,6 @@ package frame
 import (
 	"errors"
 	"reflect"
-	"strings"
 	// "fmt"
 )
 
@@ -44,20 +43,6 @@ var Ops = map[string]func(float64, float64) Element{
 	"<=": func(a, b float64) Element { return Element{Val: a <= b} },
 	">":  func(a, b float64) Element { return Element{Val: a > b} },
 	">=": func(a, b float64) Element { return Element{Val: a >= b} },
-}
-
-// ------------------------------------------
-// Helper Functions -------------------------
-// ------------------------------------------
-func is_numeric(t reflect.Type) bool {
-	t_string := t.String()
-	numeric_types := [...]string{"int", "float", "complex"}
-	for _, s := range numeric_types {
-		if strings.Contains(t_string, s) {
-			return true
-		}
-	}
-	return false
 }
 
 // ------------------------------------------
@@ -146,7 +131,7 @@ func (e Element) Prod(x Element) (Element, error) {
 // ------------------------------------------
 // Series Methods ---------------------------
 // ------------------------------------------
-func SeriesInit(name string, data []interface{}, t reflect.Type) (Series, error) {
+func GoSeries(name string, data []interface{}, t reflect.Type) (Series, error) {
 	if len(data) == 0 {
 		return Series{Name: name}, errors.New("EmptyFrame")
 	}
