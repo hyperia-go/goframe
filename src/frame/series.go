@@ -68,10 +68,31 @@ func (elements Elements) Prod() float64 {
 	return prod.Val.(float64)
 }
 
+func (elements Elements) Max() (Element, int) {
+	m := Element{Val: elements.Vals[0].Val}
+	e_float := m.AsFloat()
+	index := 0
+	if e_float != nil {
+		panic(e_float)
+	}
+
+	for i, e := range elements.Vals {
+		err := e.AsFloat()
+		if err != nil {
+			panic(err)
+		}
+		if e.Val.(float64) > m.Val.(float64) {
+			m = e
+			index = i
+		}
+	}
+
+	return m, index
+}
+
 // ------------------------------------------
 // Element Methods --------------------------
 // ------------------------------------------
-
 func (e *Element) AsFloat() error {
 	switch e.Val.(type) {
 	case uint8:
@@ -154,15 +175,25 @@ func (series Series) Get() []interface{} {
 }
 
 func (series Series) Sum() (float64, error) {
-	if !is_numeric(series.Type) {
+	if !isNumeric(series.Type) {
 		return float64(0), errors.New("ArithmeticError: can only add numeric types")
 	}
 	return series.Elements.Sum(), nil
 }
 
 func (series Series) Product() (float64, error) {
-	if !is_numeric(series.Type) {
+	if !isNumeric(series.Type) {
 		return float64(0), errors.New("ArithmeticError: can only add numeric types")
 	}
 	return series.Elements.Prod(), nil
+}
+
+func (series Series) Max() (Element, error) {
+	max, _ := series.Elements.Max()
+	return max, nil
+}
+
+func (series Series) Argmax() (int, error) {
+	_, index := series.Elements.Max()
+	return index, nil
 }
