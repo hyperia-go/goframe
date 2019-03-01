@@ -1,11 +1,11 @@
-package frame
+package tests
 
 import (
 	"testing"
 )
 
 func TestFrameInitEmpty(t *testing.T) {
-	_, err := GoFrame(nil)
+	_, err := createEmptyTestFrame(t)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
