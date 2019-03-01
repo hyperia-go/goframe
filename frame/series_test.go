@@ -35,7 +35,7 @@ func createSmallNumericFloatSeries(t *testing.T) (Series, error) {
 
 func createEmptySeries(t *testing.T) (Series, error) {
 	v, err := GoSeries("empty", make([]interface{}, 0), reflect.TypeOf(nil))
-	if err != nil {
+	if err.Error() != "EmptyFrame" {
 		t.Errorf("%+v", err)
 	}
 	return v, err
