@@ -256,3 +256,20 @@ func TestSeries_CumSum(t *testing.T) {
 		t.Errorf("Cumsum failed. Expected %+v, got %+v", expected, got)
 	}
 }
+
+func TestSeries_CumSum2(t *testing.T) {
+	s, _ := createSmallNumericFloatSeries(t)
+	cumsum, err := s.Cumsum()
+	got := cumsum.Get()
+	if err != nil {
+		t.Errorf("%+v", err)
+	}
+	expected := make([]interface{}, len(SmallDataInt))
+	expected_int := [...]float64{0.1, 0.3, 0.6, 1.0, 1.5}
+	for i, v := range expected_int {
+		expected[i] = v
+	}
+	if !Eq(got, expected) {
+		t.Errorf("Cumsum failed. Expected %+v, got %+v", expected, got)
+	}
+}

@@ -3,7 +3,6 @@ package frame
 import (
 	"datatypes"
 	"errors"
-	"fmt"
 	"frame/element"
 	"reflect"
 )
@@ -120,7 +119,6 @@ func (series* Series) Cumsum() (Series, error) {
 		Elements: element.NewArr(series.Len()),
 		Type: reflect.Float64,
 	}
-	fmt.Println(series.Elements)
 	for i, v := range series.Elements.Vals {
 		sum, _ = element.Add(sum, v)
 		s.Set(i, sum)

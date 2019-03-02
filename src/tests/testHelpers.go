@@ -5,6 +5,7 @@ import (
 	"frame"
 	"frame/element"
 	"math"
+	"reflect"
 	"testing"
 )
 
@@ -72,8 +73,18 @@ func Eq(a, b []interface{}) bool {
 	}
 
 	for i := range a {
-		if a[i] != b[i] {
-			return false
+		if !reflect.DeepEqual(a[i], b[i]) {
+
+			// Compare floats, which may have floating point precision errors
+			a_type := reflect.TypeOf(a[i]).Kind()
+			b_type := reflect.TypeOf(b[i]).Kind()
+			if a_type == reflect.Float32 ||a_type == reflect.Float64 || b_type == reflect.Float32 ||b_type == reflect.Float64 {
+				if math.Abs(a[i].(float64) - b[i].(float64)) > 1e-10 {
+					return false
+				}
+			} else {
+				return false
+			}
 		}
 	}
 
