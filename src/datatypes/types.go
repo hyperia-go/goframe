@@ -5,12 +5,11 @@ import (
 	"strings"
 )
 
-func DType(data []interface{}) reflect.Type {
-	return reflect.TypeOf(data[0])
+func DType(data []interface{}) string {
+	return reflect.TypeOf(data[0]).String()
 }
 
-func IsNumeric(t reflect.Type) bool {
-	typeString := t.String()
+func IsNumeric(typeString string) bool {
 	numericTypes := [...]string{"int", "float", "complex"}
 	for _, s := range numericTypes {
 		if strings.Contains(typeString, s) {

@@ -3,8 +3,8 @@ package frame
 import (
 	"datatypes"
 	"errors"
-	"reflect"
 	"frame/element"
+	"reflect"
 )
 
 var _ = reflect.TypeOf(0)
@@ -15,7 +15,7 @@ var _ = reflect.TypeOf(0)
 type Series struct {
 	Name     string
 	Elements element.ElementArray
-	Type     reflect.Type
+	Type     string
 }
 
 // ------------------------------------------
@@ -25,8 +25,11 @@ func GoSeries(name string, data []interface{}) (Series, error) {
 	if len(data) == 0 {
 		return Series{Name: name}, errors.New("EmptyFrame")
 	}
+
+	// TODO - Implement this properly.
 	t := datatypes.DType(data)
 
+	// Create the series
 	s := Series{Name: name, Type: t}
 	s_data := make([]element.Element, len(data))
 	for i := range data {
