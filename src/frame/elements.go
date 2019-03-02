@@ -1,5 +1,7 @@
 package frame
 
+import "fmt"
+
 type Elements struct {
 	Vals []Element
 }
@@ -27,7 +29,17 @@ func (elements Elements) Prod() float64 {
 	return prod.Val.(float64)
 }
 
-func (elements Elements) Max() (Element, int) {
+func (elements Elements) minmax(op string) (Element, int) {
+	switch op {
+	case "max":
+		op = ">"
+	case "min":
+		op = "<"
+	default:
+		p := fmt.Sprintf("Unknown operation %s", op)
+		panic(p)
+	}
+
 	m := Element{Val: elements.Vals[0].Val}
 	e_float := m.AsFloat()
 	index := 0
@@ -40,11 +52,19 @@ func (elements Elements) Max() (Element, int) {
 		if err != nil {
 			panic(err)
 		}
-		if e.Val.(float64) > m.Val.(float64) {
+		if Ops[op](e.Val.(float64), m.Val.(float64)).Val.(bool) {
 			m = e
 			index = i
 		}
 	}
 
 	return m, index
+}
+
+func (elements Elements) Max() (Element, int) {
+	return elements.minmax("max")
+}
+
+func (elements Elements) Min() (Element, int) {
+	return elements.minmax("min")
 }

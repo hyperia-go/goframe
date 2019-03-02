@@ -65,3 +65,14 @@ func (series Series) Argmax() (int, error) {
 	_, index := series.Elements.Max()
 	return index, nil
 }
+
+
+func (series Series) Min() (Element, error) {
+	max, _ := series.Elements.Min()
+	return max, nil
+}
+
+func (series Series) Argmin() (int, error) {
+	_, index := series.Elements.Min()
+	return index, nil
+}

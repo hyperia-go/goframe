@@ -158,3 +158,19 @@ func TestSeries_Argmax(t *testing.T) {
 		t.Errorf("Expected index 4, got %d", index)
 	}
 }
+
+func TestSeries_Min(t *testing.T) {
+	s, _ := createSmallNumericIntSeries(t)
+	min, _ := s.Min()
+	if min.Val.(float64) != float64(1) {
+		t.Errorf("Expected 1, got %f", min.Val.(float64))
+	}
+}
+
+func TestSeries_Argmin(t *testing.T) {
+	s, _ := createSmallNumericIntSeries(t)
+	index, _ := s.Argmin()
+	if index != 0 {
+		t.Errorf("Expected 0, got %d", index)
+	}
+}
