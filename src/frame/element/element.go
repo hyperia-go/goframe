@@ -8,30 +8,34 @@ import (
 
 type Element struct {
 	Val interface{}
-	Type reflect.Type
+	Type reflect.Kind
 }
 
-var emptyElement = Element{Val: nil}
+var emptyElement = New(nil)
 
 var Ops = map[string]func(Element, Element) (Element, error) {
-	"+":  func(a, b Element) (Element, error) { return Element{Val: a.Val.(float64) + b.Val.(float64)}, nil },
-	"-":  func(a, b Element) (Element, error) { return Element{Val: a.Val.(float64) - b.Val.(float64)}, nil },
-	"*":  func(a, b Element) (Element, error) { return Element{Val: a.Val.(float64) * b.Val.(float64)}, nil },
-	"/":  func(a, b Element) (Element, error) { return Element{Val: a.Val.(float64) / b.Val.(float64)}, nil },
-	"%":  func(a, b Element) (Element, error) { return Element{Val: math.Mod(a.Val.(float64), b.Val.(float64))}, nil },
-	"<":  func(a, b Element) (Element, error) { return Element{ Val: a.Val.(float64) < b.Val.(float64)}, nil },
-	"<=": func(a, b Element) (Element, error) { return Element{ Val: a.Val.(float64) <= b.Val.(float64)}, nil },
-	">":  func(a, b Element) (Element, error) { return Element{ Val: a.Val.(float64) > b.Val.(float64)}, nil },
-	">=": func(a, b Element) (Element, error) { return Element{ Val: a.Val.(float64) >= b.Val.(float64)}, nil },
-	"==": func(a, b Element) (Element, error) { return Element{ Val: a.Val == b.Val}, nil },
+	"+":  func(a, b Element) (Element, error) { return New(a.Val.(float64) + b.Val.(float64)), nil },
+	"-":  func(a, b Element) (Element, error) { return New(a.Val.(float64) - b.Val.(float64)), nil },
+	"*":  func(a, b Element) (Element, error) { return New(a.Val.(float64) * b.Val.(float64)), nil },
+	"/":  func(a, b Element) (Element, error) { return New(a.Val.(float64) / b.Val.(float64)), nil },
+	"%":  func(a, b Element) (Element, error) { return New(math.Mod(a.Val.(float64), b.Val.(float64))), nil },
+	"<":  func(a, b Element) (Element, error) { return New(a.Val.(float64) < b.Val.(float64)), nil },
+	"<=": func(a, b Element) (Element, error) { return New(a.Val.(float64) <= b.Val.(float64)), nil },
+	">":  func(a, b Element) (Element, error) { return New(a.Val.(float64) > b.Val.(float64)), nil },
+	">=": func(a, b Element) (Element, error) { return New(a.Val.(float64) >= b.Val.(float64)), nil },
+	"==": func(a, b Element) (Element, error) { return New(a.Val == b.Val), nil },
 }
 
 // ------------------------------------------
 // Element Methods --------------------------
 // ------------------------------------------
 func New(value interface{}) Element {
-	return Element{Val: value, Type: reflect.TypeOf(value)}
+	if value == nil {
+		return Element{Val: value, Type: reflect.Invalid}
+	}
+	return Element{Val: value, Type: reflect.TypeOf(value).Kind()}
 }
+
 func (e *Element) AsFloat() error {
 	switch e.Val.(type) {
 	case uint8:

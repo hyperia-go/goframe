@@ -3,6 +3,7 @@ package frame
 import (
 	"datatypes"
 	"errors"
+	"fmt"
 	"frame/element"
 	"reflect"
 )
@@ -16,7 +17,7 @@ type Series struct {
 	Name     string
 	Elements element.ElementArray
 	Index 	 []int
-	Type     string
+	Type     reflect.Kind
 }
 
 // ------------------------------------------
@@ -35,7 +36,7 @@ func GoSeries(name string, data []interface{}) (Series, error) {
 	s_data := make([]element.Element, len(data))
 	index := make([]int, len(data))
 	for i := range data {
-		s_data[i] = element.Element{Val: data[i]}
+		s_data[i] = element.New(data[i])
 		index[i] = i
 	}
 	elems := element.ElementArray{Vals: s_data}
@@ -52,41 +53,40 @@ func (series Series) Get() []interface{} {
 	return ret
 }
 
-func (series Series) Len() int {
+func (series* Series) Len() int {
 	return len(series.Elements.Vals)
 }
 
-func (series Series) Sum() (float64, error) {
+func (series* Series) Sum() (float64, error) {
 	if !datatypes.IsNumeric(series.Type) {
 		return float64(0), errors.New("ArithmeticError: can only add numeric types")
 	}
 	return series.Elements.Sum(), nil
 }
 
-func (series Series) Product() (float64, error) {
+func (series* Series) Product() (float64, error) {
 	if !datatypes.IsNumeric(series.Type) {
 		return float64(0), errors.New("ArithmeticError: can only add numeric types")
 	}
 	return series.Elements.Prod(), nil
 }
 
-func (series Series) Max() (element.Element, error) {
+func (series* Series) Max() (element.Element, error) {
 	max, _ := series.Elements.Max()
 	return max, nil
 }
 
-func (series Series) Argmax() (int, error) {
+func (series* Series) Argmax() (int, error) {
 	_, index := series.Elements.Max()
 	return index, nil
 }
 
-
-func (series Series) Min() (element.Element, error) {
+func (series* Series) Min() (element.Element, error) {
 	max, _ := series.Elements.Min()
 	return max, nil
 }
 
-func (series Series) Argmin() (int, error) {
+func (series* Series) Argmin() (int, error) {
 	_, index := series.Elements.Min()
 	return index, nil
 }
@@ -103,4 +103,28 @@ func (series* Series) ResetIndex(inplace bool) *Series {
 		ret := Series{Elements: series.Elements, Type: series.Type, Name: series.Name, Index: index}
 		return &ret
 	}
+}
+
+func (series* Series) Append(e interface{}) {
+	series.Elements.Append(e)
+}
+
+func (series *Series) Set(i int, e element.Element) {
+	series.Elements.Vals[i] = e
+}
+
+func (series* Series) Cumsum() (Series, error) {
+	sum := element.New(float64(0))
+	s := Series{
+		Name: series.Name,
+		Elements: element.NewArr(series.Len()),
+		Type: reflect.Float64,
+	}
+	fmt.Println(series.Elements)
+	for i, v := range series.Elements.Vals {
+		sum, _ = element.Add(sum, v)
+		s.Set(i, sum)
+	}
+	s.ResetIndex(true)
+	return s, nil
 }

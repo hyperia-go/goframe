@@ -9,12 +9,15 @@ type ElementArray struct {
 // ------------------------------------------
 // ElementArray Methods -------------------------
 // ------------------------------------------
+func NewArr(n int) ElementArray {
+	return ElementArray{Vals: make([]Element, n)}
+}
 func (elements ElementArray) Len() int {
 	return len(elements.Vals)
 }
 
 func (elements ElementArray) Sum() float64 {
-	sum := Element{Val: float64(0)}
+	sum := New(float64(0))
 	for _, x := range elements.Vals {
 		sum, _ = Add(sum, x)
 	}
@@ -22,7 +25,7 @@ func (elements ElementArray) Sum() float64 {
 }
 
 func (elements ElementArray) Prod() float64 {
-	prod := Element{Val: float64(1)}
+	prod := New(float64(1))
 	for _, x := range elements.Vals {
 		prod, _ = Prod(prod, x)
 	}
@@ -64,4 +67,8 @@ func (elements ElementArray) Max() (Element, int) {
 
 func (elements ElementArray) Min() (Element, int) {
 	return elements.minmax("min")
+}
+
+func (elements *ElementArray) Append(e interface{}) {
+	elements.Vals = append(elements.Vals, New(e))
 }

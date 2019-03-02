@@ -239,3 +239,20 @@ func TestSeries_Argmin(t *testing.T) {
 		t.Errorf("Expected 0, got %d", index)
 	}
 }
+
+func TestSeries_CumSum(t *testing.T) {
+	s, _ := createSmallNumericIntSeries(t)
+	cumsum, err := s.Cumsum()
+	got := cumsum.Get()
+	if err != nil {
+		t.Errorf("%+v", err)
+	}
+	expected := make([]interface{}, len(SmallDataInt))
+	expected_int := [...]float64{1, 3, 6, 10, 15}
+	for i, v := range expected_int {
+		expected[i] = v
+	}
+	if !Eq(got, expected) {
+		t.Errorf("Cumsum failed. Expected %+v, got %+v", expected, got)
+	}
+}
