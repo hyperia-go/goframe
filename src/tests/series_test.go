@@ -108,7 +108,6 @@ func TestSeries_Product(t *testing.T) {
 	prod_float, err_float := s_float.Product()
 	expected_float := float64(0.1 * 0.2 * 0.3 * 0.4 * 0.5)
 
-	// TODO: deal with floating point precision problems.
 	if err_float != nil || !FloatEq(prod_float, expected_float) {
 		t.Errorf("Error: %+v (<nil> expected). Expected product %f got %f", err_float, expected_float, prod_float)
 	}
