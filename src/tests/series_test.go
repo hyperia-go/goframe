@@ -46,6 +46,54 @@ func TestSeries_Get2(t *testing.T) {
 	}
 }
 
+func TestSeries_Index(t *testing.T) {
+	series, err := createLargeNumericIntSeries(t)
+	if err != nil {
+		t.Errorf("%+v", err)
+	}
+	index := series.Index
+	expected := make([]interface{}, series.Len())
+	got := make([]interface{}, series.Len())
+	for i, v := range index {
+		expected[i] = i
+		got[i] = v
+	}
+	if !Eq(got, expected) {
+		t.Error("Indexes do not match")
+	}
+}
+
+func TestSeries_ResetIndex(t *testing.T) {
+	series, err := createLargeNumericIntSeries(t)
+	if err != nil {
+		t.Errorf("%+v", err)
+	}
+	series.Index[100] = 12345654321
+	index := series.Index
+	expected := make([]interface{}, series.Len())
+	got := make([]interface{}, series.Len())
+	for i, v := range index {
+		expected[i] = i
+		got[i] = v
+	}
+	if Eq(got, expected) {
+		t.Error("Indexes should not match")
+	}
+
+	series.ResetIndex(true)
+	index = series.Index
+	expected = make([]interface{}, series.Len())
+	got = make([]interface{}, series.Len())
+	for i, v := range index {
+		expected[i] = i
+		got[i] = v
+	}
+	if !Eq(got, expected) {
+		t.Error("Indexes do not match")
+	}
+
+}
+
 func TestSeries_Sum(t *testing.T) {
 
 	// Test sum with ints

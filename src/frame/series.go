@@ -15,6 +15,7 @@ var _ = reflect.TypeOf(0)
 type Series struct {
 	Name     string
 	Elements element.ElementArray
+	Index 	 []int
 	Type     string
 }
 
@@ -32,11 +33,14 @@ func GoSeries(name string, data []interface{}) (Series, error) {
 	// Create the series
 	s := Series{Name: name, Type: t}
 	s_data := make([]element.Element, len(data))
+	index := make([]int, len(data))
 	for i := range data {
 		s_data[i] = element.Element{Val: data[i]}
+		index[i] = i
 	}
 	elems := element.ElementArray{Vals: s_data}
 	s.Elements = elems
+	s.Index = index
 	return s, nil
 }
 
@@ -46,6 +50,10 @@ func (series Series) Get() []interface{} {
 		ret[i] = v.Val
 	}
 	return ret
+}
+
+func (series Series) Len() int {
+	return len(series.Elements.Vals)
 }
 
 func (series Series) Sum() (float64, error) {
@@ -81,4 +89,18 @@ func (series Series) Min() (element.Element, error) {
 func (series Series) Argmin() (int, error) {
 	_, index := series.Elements.Min()
 	return index, nil
+}
+
+func (series* Series) ResetIndex(inplace bool) *Series {
+	index := make([]int, series.Len())
+	for i := range index {
+		index[i] = i
+	}
+	if inplace {
+		series.Index = index
+		return series
+	} else {
+		ret := Series{Elements: series.Elements, Type: series.Type, Name: series.Name, Index: index}
+		return &ret
+	}
 }
