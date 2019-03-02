@@ -1,1 +1,3 @@
 language: go
+go_import_path: github.com/celsomilne/goframe.git/src
+script: go test -v ./src/tests/
