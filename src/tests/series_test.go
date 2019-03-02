@@ -80,6 +80,21 @@ func TestSeries_ResetIndex(t *testing.T) {
 		t.Error("Indexes should not match")
 	}
 
+	// Test not inplace index reset
+	series.ResetIndex(false)
+	index = series.Index
+	expected = make([]interface{}, series.Len())
+	got = make([]interface{}, series.Len())
+	for i, v := range index {
+		expected[i] = i
+		got[i] = v
+	}
+	if Eq(got, expected) {
+		t.Error("Indexes should not match during non inplace reset of index")
+	}
+
+
+	// Test inplace index reset
 	series.ResetIndex(true)
 	index = series.Index
 	expected = make([]interface{}, series.Len())
