@@ -4,7 +4,6 @@ import (
 	"encoding/csv"
 	"io"
 	"os"
-	"reflect"
 )
 
 func ReadCsv(file string) (Frame, error) {
@@ -53,8 +52,7 @@ func ReadCsv(file string) (Frame, error) {
 	for i, col := range columns {
 		name := col[0]
 		data := col[1:]
-		t := reflect.TypeOf("")
-		s, err := GoSeries(name.(string), data, t)
+		s, err := GoSeries(name.(string), data)
 		if err != nil {
 			return empty, err
 		}

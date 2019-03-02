@@ -29,7 +29,7 @@ func GoFrame(columns []interface{}) (Frame, error) {
 			for i, col := range c.([]interface{}) {
 				data[i] = col
 			}
-			series, err := GoSeries(name, data, reflect.TypeOf(data[0]))
+			series, err := GoSeries(name, data)
 			if err != nil {
 				panic(err)
 			}

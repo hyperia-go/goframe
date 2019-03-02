@@ -1,19 +1,19 @@
-package frame
+package element
 
 import "fmt"
 
-type Elements struct {
+type ElementArray struct {
 	Vals []Element
 }
 
 // ------------------------------------------
-// Elements Methods -------------------------
+// ElementArray Methods -------------------------
 // ------------------------------------------
-func (elements Elements) Len() int {
+func (elements ElementArray) Len() int {
 	return len(elements.Vals)
 }
 
-func (elements Elements) Sum() float64 {
+func (elements ElementArray) Sum() float64 {
 	sum := Element{Val: float64(0)}
 	for _, x := range elements.Vals {
 		sum, _ = Add(sum, x)
@@ -21,7 +21,7 @@ func (elements Elements) Sum() float64 {
 	return sum.Val.(float64)
 }
 
-func (elements Elements) Prod() float64 {
+func (elements ElementArray) Prod() float64 {
 	prod := Element{Val: float64(1)}
 	for _, x := range elements.Vals {
 		prod, _ = Prod(prod, x)
@@ -29,7 +29,7 @@ func (elements Elements) Prod() float64 {
 	return prod.Val.(float64)
 }
 
-func (elements Elements) minmax(operation string) (Element, int) {
+func (elements ElementArray) minmax(operation string) (Element, int) {
 	op := Le
 	switch operation {
 	case "max":
@@ -58,10 +58,10 @@ func (elements Elements) minmax(operation string) (Element, int) {
 	return m, index
 }
 
-func (elements Elements) Max() (Element, int) {
+func (elements ElementArray) Max() (Element, int) {
 	return elements.minmax("max")
 }
 
-func (elements Elements) Min() (Element, int) {
+func (elements ElementArray) Min() (Element, int) {
 	return elements.minmax("min")
 }

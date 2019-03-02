@@ -1,12 +1,14 @@
-package frame
+package element
 
 import (
 	"errors"
 	"math"
+	"reflect"
 )
 
 type Element struct {
 	Val interface{}
+	Type reflect.Type
 }
 
 var emptyElement = Element{Val: nil}
@@ -27,6 +29,9 @@ var Ops = map[string]func(Element, Element) (Element, error) {
 // ------------------------------------------
 // Element Methods --------------------------
 // ------------------------------------------
+func New(value interface{}) Element {
+	return Element{Val: value, Type: reflect.TypeOf(value)}
+}
 func (e *Element) AsFloat() error {
 	switch e.Val.(type) {
 	case uint8:

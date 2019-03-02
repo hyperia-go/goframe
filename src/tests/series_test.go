@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"frame"
+	"frame/element"
 	"testing"
 )
 
@@ -146,7 +146,7 @@ func TestSeries_Product2(t *testing.T) {
 func TestSeries_Max(t *testing.T) {
 	s, _ := createSmallNumericIntSeries(t)
 	max, _ := s.Max()
-	res, _ := frame.Eq(max, SmallMax)
+	res, _ := element.Eq(max, SmallMax)
 	if !res.Val.(bool) {
 		t.Errorf("Expected 5.0, got %f", max.Val.(float64))
 	}
@@ -163,7 +163,7 @@ func TestSeries_Argmax(t *testing.T) {
 func TestSeries_Min(t *testing.T) {
 	s, _ := createSmallNumericIntSeries(t)
 	min, _ := s.Min()
-	res, _ := frame.Eq(min, SmallMax)
+	res, _ := element.Eq(min, SmallMax)
 	if res.Val.(bool) {
 		t.Errorf("Expected 1, got %f", min.Val.(float64))
 	}

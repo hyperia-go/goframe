@@ -1,20 +1,20 @@
 package tests
 
 import (
-	"frame"
+	"frame/element"
 	"math"
 	"testing"
 )
 
 func TestElement_Add(t *testing.T) {
-	a := frame.Element{Val: 100}
-	b := frame.Element{Val: 200}
-	got, err := frame.Add(a, b)
+	a := element.Element{Val: 100}
+	b := element.Element{Val: 200}
+	got, err := element.Add(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
-	expected := frame.Element{Val: a.Val.(int) + b.Val.(int)}
-	res, err2 := frame.Eq(got, expected)
+	expected := element.Element{Val: a.Val.(int) + b.Val.(int)}
+	res, err2 := element.Eq(got, expected)
 	if err2 != nil {
 		t.Errorf("%+v", err2)
 	}
@@ -24,14 +24,14 @@ func TestElement_Add(t *testing.T) {
 }
 
 func TestElement_Add2(t *testing.T) {
-	a := frame.Element{Val: float64(123.456)}
-	b := frame.Element{Val: float64(-1234.56)}
-	got, err := frame.Add(a, b)
+	a := element.Element{Val: float64(123.456)}
+	b := element.Element{Val: float64(-1234.56)}
+	got, err := element.Add(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
-	expected := frame.Element{Val: a.Val.(float64) + b.Val.(float64)}
-	res, err2 := frame.Eq(got, expected)
+	expected := element.Element{Val: a.Val.(float64) + b.Val.(float64)}
+	res, err2 := element.Eq(got, expected)
 	if err2 != nil {
 		t.Errorf("%+v", err2)
 	}
@@ -41,14 +41,14 @@ func TestElement_Add2(t *testing.T) {
 }
 
 func TestElement_Sub(t *testing.T) {
-	a := frame.Element{Val: 100}
-	b := frame.Element{Val: 200}
-	got, err := frame.Diff(a, b)
+	a := element.Element{Val: 100}
+	b := element.Element{Val: 200}
+	got, err := element.Diff(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
-	expected := frame.Element{Val: a.Val.(int) - b.Val.(int)}
-	res, err2 := frame.Eq(got, expected)
+	expected := element.Element{Val: a.Val.(int) - b.Val.(int)}
+	res, err2 := element.Eq(got, expected)
 	if err2 != nil {
 		t.Errorf("%+v", err2)
 	}
@@ -58,14 +58,14 @@ func TestElement_Sub(t *testing.T) {
 }
 
 func TestElement_Sub2(t *testing.T) {
-	a := frame.Element{Val: float64(123.456)}
-	b := frame.Element{Val: float64(-1234.56)}
-	got, err := frame.Diff(a, b)
+	a := element.Element{Val: float64(123.456)}
+	b := element.Element{Val: float64(-1234.56)}
+	got, err := element.Diff(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
-	expected := frame.Element{Val: a.Val.(float64) - b.Val.(float64)}
-	res, err2 := frame.Eq(got, expected)
+	expected := element.Element{Val: a.Val.(float64) - b.Val.(float64)}
+	res, err2 := element.Eq(got, expected)
 	if err2 != nil {
 		t.Errorf("%+v", err2)
 	}
@@ -75,16 +75,16 @@ func TestElement_Sub2(t *testing.T) {
 }
 
 func TestElement_Divide(t *testing.T) {
-	a := frame.Element{Val: 100}
-	b := frame.Element{Val: 200}
-	got, err := frame.Quot(a, b)
+	a := element.Element{Val: 100}
+	b := element.Element{Val: 200}
+	got, err := element.Quot(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
 
 	// Performs float division by design
-	expected := frame.Element{Val: 0.5}
-	res, err2 := frame.Eq(got, expected)
+	expected := element.Element{Val: 0.5}
+	res, err2 := element.Eq(got, expected)
 	if err2 != nil {
 		t.Errorf("%+v", err2)
 	}
@@ -94,14 +94,14 @@ func TestElement_Divide(t *testing.T) {
 }
 
 func TestElement_Divide2(t *testing.T) {
-	a := frame.Element{Val: float64(123.456)}
-	b := frame.Element{Val: float64(-1234.56)}
-	got, err := frame.Quot(a, b)
+	a := element.Element{Val: float64(123.456)}
+	b := element.Element{Val: float64(-1234.56)}
+	got, err := element.Quot(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
-	expected := frame.Element{Val: a.Val.(float64) / b.Val.(float64)}
-	res, err2 := frame.Eq(got, expected)
+	expected := element.Element{Val: a.Val.(float64) / b.Val.(float64)}
+	res, err2 := element.Eq(got, expected)
 	if err2 != nil {
 		t.Errorf("%+v", err2)
 	}
@@ -111,14 +111,14 @@ func TestElement_Divide2(t *testing.T) {
 }
 
 func TestElement_Mod(t *testing.T) {
-	a := frame.Element{Val: float64(100)}
-	b := frame.Element{Val: float64(200)}
-	got, err := frame.Mod(a, b)
+	a := element.Element{Val: float64(100)}
+	b := element.Element{Val: float64(200)}
+	got, err := element.Mod(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
-	expected := frame.Element{Val: math.Mod(a.Val.(float64), b.Val.(float64))}
-	res, err2 := frame.Eq(got, expected)
+	expected := element.Element{Val: math.Mod(a.Val.(float64), b.Val.(float64))}
+	res, err2 := element.Eq(got, expected)
 	if err2 != nil {
 		t.Errorf("%+v", err2)
 	}
@@ -128,14 +128,14 @@ func TestElement_Mod(t *testing.T) {
 }
 
 func TestElement_Mod2(t *testing.T) {
-	a := frame.Element{Val: float64(123.456)}
-	b := frame.Element{Val: float64(-1234.56)}
-	got, err := frame.Mod(a, b)
+	a := element.Element{Val: float64(123.456)}
+	b := element.Element{Val: float64(-1234.56)}
+	got, err := element.Mod(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
-	expected := frame.Element{Val: math.Mod(a.Val.(float64), b.Val.(float64))}
-	res, err2 := frame.Eq(got, expected)
+	expected := element.Element{Val: math.Mod(a.Val.(float64), b.Val.(float64))}
+	res, err2 := element.Eq(got, expected)
 	if err2 != nil {
 		t.Errorf("%+v", err2)
 	}
@@ -145,9 +145,9 @@ func TestElement_Mod2(t *testing.T) {
 }
 
 func TestElement_Equals(t *testing.T) {
-	a := frame.Element{Val: 100}
-	b := frame.Element{Val: 200}
-	got, err := frame.Eq(a, b)
+	a := element.Element{Val: 100}
+	b := element.Element{Val: 200}
+	got, err := element.Eq(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
@@ -157,9 +157,9 @@ func TestElement_Equals(t *testing.T) {
 }
 
 func TestElement_Equals2(t *testing.T) {
-	a := frame.Element{Val: float64(123.456)}
-	b := frame.Element{Val: float64(123.456)}
-	got, err := frame.Eq(a, b)
+	a := element.Element{Val: float64(123.456)}
+	b := element.Element{Val: float64(123.456)}
+	got, err := element.Eq(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
@@ -169,9 +169,9 @@ func TestElement_Equals2(t *testing.T) {
 }
 
 func TestElement_EqualsStrings(t *testing.T) {
-	a := frame.Element{Val: "yes"}
-	b := frame.Element{Val: "no"}
-	got, err := frame.Eq(a, b)
+	a := element.Element{Val: "yes"}
+	b := element.Element{Val: "no"}
+	got, err := element.Eq(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
@@ -181,9 +181,9 @@ func TestElement_EqualsStrings(t *testing.T) {
 }
 
 func TestElement_EqualsStrings2(t *testing.T) {
-	a := frame.Element{Val: "yes"}
-	b := frame.Element{Val: "yes"}
-	got, err := frame.Eq(a, b)
+	a := element.Element{Val: "yes"}
+	b := element.Element{Val: "yes"}
+	got, err := element.Eq(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
@@ -193,9 +193,9 @@ func TestElement_EqualsStrings2(t *testing.T) {
 }
 
 func TestElement_EqualsStrings3(t *testing.T) {
-	a := frame.Element{Val: ""}
-	b := frame.Element{Val: ""}
-	got, err := frame.Eq(a, b)
+	a := element.Element{Val: ""}
+	b := element.Element{Val: ""}
+	got, err := element.Eq(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
@@ -205,9 +205,9 @@ func TestElement_EqualsStrings3(t *testing.T) {
 }
 
 func TestElement_EqualsStrings4(t *testing.T) {
-	a := frame.Element{Val: "no"}
-	b := frame.Element{Val: ""}
-	got, err := frame.Eq(a, b)
+	a := element.Element{Val: "no"}
+	b := element.Element{Val: ""}
+	got, err := element.Eq(a, b)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}

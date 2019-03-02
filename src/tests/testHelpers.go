@@ -2,10 +2,10 @@ package tests
 
 import (
 	"fmt"
-	"math"
-	"reflect"
-	"testing"
 	"frame"
+	"frame/element"
+	"math"
+	"testing"
 )
 
 // Test variables
@@ -17,8 +17,8 @@ var LargeDataInt = intArange(0, 1000000, 4)
 var LargeDataFloat = floatArange(0, 500000, 2)
 var LargeDataString = strRepeat("s", 250000, true)
 
-var SmallMax = frame.Element{Val: 5}
-var SmallMin = frame.Element{Val: 1}
+var SmallMax = element.Element{Val: 5}
+var SmallMin = element.Element{Val: 1}
 
 
 // ------------------------------------------
@@ -96,7 +96,7 @@ func createSmallNumericIntSeries(t *testing.T) (frame.Series, error) {
 	for i, v := range SmallDataInt {
 		s[i] = v
 	}
-	v, err := frame.GoSeries("test", s, reflect.TypeOf(0))
+	v, err := frame.GoSeries("test", s)
 	if err != nil {
 		t.Errorf("frame.Series init failed. Expected <nil> error, got: %+v", err)
 	} else if v.Name != "test" {
@@ -110,7 +110,7 @@ func createSmallNumericFloatSeries(t *testing.T) (frame.Series, error) {
 	for i, v := range SmallDataFloat {
 		s[i] = v
 	}
-	v, err := frame.GoSeries("test", s, reflect.TypeOf(0))
+	v, err := frame.GoSeries("test", s)
 	if err != nil {
 		t.Errorf("frame.Series init failed. Expected <nil> error, got: %+v", err)
 	}
@@ -122,7 +122,7 @@ func createSmallStringSeries(t *testing.T) (frame.Series, error) {
 	for i, v := range SmallDataString {
 		s[i] = v
 	}
-	v, err := frame.GoSeries("test", s, reflect.TypeOf(0))
+	v, err := frame.GoSeries("test", s)
 	if err != nil {
 		t.Errorf("frame.Series init failed. Expected <nil> error, got: %+v", err)
 	}
@@ -130,7 +130,7 @@ func createSmallStringSeries(t *testing.T) (frame.Series, error) {
 }
 
 func createEmptySeries(t *testing.T) (frame.Series, error) {
-	v, err := frame.GoSeries("empty", make([]interface{}, 0), reflect.TypeOf(nil))
+	v, err := frame.GoSeries("empty", make([]interface{}, 0))
 	if err.Error() != "EmptyFrame" {
 		t.Errorf("%+v", err)
 	}
@@ -142,7 +142,7 @@ func createLargeNumericIntSeries(t *testing.T) (frame.Series, error) {
 	for i, v := range LargeDataInt {
 		s[i] = v
 	}
-	v, err := frame.GoSeries("test", s, reflect.TypeOf(0))
+	v, err := frame.GoSeries("test", s)
 	if err != nil {
 		t.Errorf("frame.Series init failed. Expected <nil> error, got: %+v", err)
 	} else if v.Name != "test" {
@@ -156,7 +156,7 @@ func createLargeNumericFloatSeries(t *testing.T) (frame.Series, error) {
 	for i, v := range LargeDataFloat {
 		s[i] = v
 	}
-	v, err := frame.GoSeries("test", s, reflect.TypeOf(0))
+	v, err := frame.GoSeries("test", s)
 	if err != nil {
 		t.Errorf("frame.Series init failed. Expected <nil> error, got: %+v", err)
 	} else if v.Name != "test" {
@@ -170,7 +170,7 @@ func createLargeStringSeries(t *testing.T) (frame.Series, error) {
 	for i, v := range LargeDataString {
 		s[i] = v
 	}
-	v, err := frame.GoSeries("test", s, reflect.TypeOf(0))
+	v, err := frame.GoSeries("test", s)
 	if err != nil {
 		t.Errorf("frame.Series init failed. Expected <nil> error, got: %+v", err)
 	} else if v.Name != "test" {
@@ -209,9 +209,9 @@ func createSmallTestFrame(t *testing.T) (frame.Frame, error) {
 		c3[i] = c
 	}
 
-	series1, err1 := frame.GoSeries(name1, c1, reflect.TypeOf(SmallDataInt[0]))
-	series2, err2 := frame.GoSeries(name2, c2, reflect.TypeOf(SmallDataFloat[0]))
-	series3, err3 := frame.GoSeries(name3, c3, reflect.TypeOf(SmallDataString[0]))
+	series1, err1 := frame.GoSeries(name1, c1)
+	series2, err2 := frame.GoSeries(name2, c2)
+	series3, err3 := frame.GoSeries(name3, c3)
 
 	if err1 != nil || err2 != nil || err3 != nil {
 		t.Errorf("%+v %+v %+v", err1, err2, err3)
