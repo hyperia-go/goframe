@@ -29,30 +29,27 @@ func (elements Elements) Prod() float64 {
 	return prod.Val.(float64)
 }
 
-func (elements Elements) minmax(op string) (Element, int) {
-	switch op {
+func (elements Elements) minmax(operation string) (Element, int) {
+	op := Le
+	switch operation {
 	case "max":
-		op = ">"
+		op = Ge
 	case "min":
-		op = "<"
+		op = Le
 	default:
 		p := fmt.Sprintf("Unknown operation %s", op)
 		panic(p)
 	}
 
-	m := Element{Val: elements.Vals[0].Val}
-	e_float := m.AsFloat()
+	m := elements.Vals[0]
 	index := 0
-	if e_float != nil {
-		panic(e_float)
-	}
-
 	for i, e := range elements.Vals {
-		err := e.AsFloat()
+
+		res, err := op(e, m)
 		if err != nil {
 			panic(err)
 		}
-		if Ops[op](e.Val.(float64), m.Val.(float64)).Val.(bool) {
+		if res {
 			m = e
 			index = i
 		}
