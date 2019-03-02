@@ -16,7 +16,7 @@ func (elements Elements) Len() int {
 func (elements Elements) Sum() float64 {
 	sum := Element{Val: float64(0)}
 	for _, x := range elements.Vals {
-		sum, _ = sum.Add(x)
+		sum, _ = Add(sum, x)
 	}
 	return sum.Val.(float64)
 }
@@ -24,7 +24,7 @@ func (elements Elements) Sum() float64 {
 func (elements Elements) Prod() float64 {
 	prod := Element{Val: float64(1)}
 	for _, x := range elements.Vals {
-		prod, _ = prod.Prod(x)
+		prod, _ = Prod(prod, x)
 	}
 	return prod.Val.(float64)
 }
@@ -49,7 +49,7 @@ func (elements Elements) minmax(operation string) (Element, int) {
 		if err != nil {
 			panic(err)
 		}
-		if res {
+		if res.Val.(bool) {
 			m = e
 			index = i
 		}
