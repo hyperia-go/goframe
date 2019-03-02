@@ -1,3 +1,2 @@
-export GOPATH=$GOPATH:`pwd`
-echo $GOPATH
+export GOPATH=$HOME/go:`pwd`
 go test -v ./src/tests/
