@@ -4,15 +4,22 @@ import (
 	"testing"
 )
 
-func TestFrameInitEmpty(t *testing.T) {
+func TestFrame_InitEmpty(t *testing.T) {
 	_, err := createEmptyTestFrame(t)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
 }
 
-func TestFrameInit(t *testing.T) {
+func TestFrame_Init(t *testing.T) {
 	_, err := createSmallTestFrame(t)
+	if err != nil {
+		t.Errorf("%+v", err)
+	}
+}
+
+func TestFrame_Init2(t *testing.T) {
+	_, err := createSmallTestFrame2(t)
 	if err != nil {
 		t.Errorf("%+v", err)
 	}

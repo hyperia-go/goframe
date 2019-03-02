@@ -185,6 +185,7 @@ func createEmptyTestFrame(t *testing.T) (frame.Frame, error) {
 	}
 	return f, err
 }
+
 func createSmallTestFrame(t *testing.T) (frame.Frame, error) {
 	name1 := "Integers"
 	c1 := make([]interface{}, len(SmallDataInt))

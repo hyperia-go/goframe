@@ -43,6 +43,14 @@ func GoFrame(columns []interface{}) (Frame, error) {
 	return f, nil
 }
 
+func GoFrameFromSeries(columns []Series) (Frame, error) {
+	s := make([]interface{}, len(columns))
+	for i, v := range columns {
+		s[i] = v
+	}
+	return GoFrame(s)
+}
+
 func (frame *Frame) Get(column string) Series {
 	return frame.Columns[column]
 }
