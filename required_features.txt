@@ -41,7 +41,18 @@ _______
 - nunique - number of unique values in the series
 - plotting ** VERY HARD
 
+Testing
+_______
+- Each test should show that the dataframe has not been modified from the original one, if necessary.
+
 Notes
 _____
 
 We will also have to implement threading for many of these methods when data gets too big. Definitely something for later in the pipeline...
+
+Documentation
+------------------------------------
+------------------------------------
+
+- Doc strings for each of the methods and functions implemented
+- Dynamic documentation
