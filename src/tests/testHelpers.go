@@ -18,8 +18,8 @@ var LargeDataInt = intArange(0, 1000000, 4)
 var LargeDataFloat = floatArange(0, 500000, 2)
 var LargeDataString = strRepeat("s", 250000, true)
 
-var SmallMax = element.Element{Val: 5}
-var SmallMin = element.Element{Val: 1}
+var SmallMax = element.New(5)
+var SmallMin = element.New(1)
 
 
 // ------------------------------------------

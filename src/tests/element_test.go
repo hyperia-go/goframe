@@ -13,7 +13,7 @@ func TestElement_Add(t *testing.T) {
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
-	expected := element.Element{Val: a.Val.(int) + b.Val.(int)}
+	expected := element.New(a.Val.(int) + b.Val.(int))
 	res, err2 := element.Eq(got, expected)
 	if err2 != nil {
 		t.Errorf("%+v", err2)

@@ -211,7 +211,7 @@ func TestSeries_Max(t *testing.T) {
 	max, _ := s.Max()
 	res, _ := element.Eq(max, SmallMax)
 	if !res.Val.(bool) {
-		t.Errorf("Expected 5.0, got %f", max.Val.(float64))
+		t.Errorf("Expected 5.0, got %+v", max)
 	}
 }
 

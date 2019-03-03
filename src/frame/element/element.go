@@ -23,7 +23,6 @@ var Ops = map[string]func(Element, Element) (Element, error) {
 	"<=": func(a, b Element) (Element, error) { return New(a.Val.(float64) <= b.Val.(float64)), nil },
 	">":  func(a, b Element) (Element, error) { return New(a.Val.(float64) > b.Val.(float64)), nil },
 	">=": func(a, b Element) (Element, error) { return New(a.Val.(float64) >= b.Val.(float64)), nil },
-	"==": func(a, b Element) (Element, error) { return New(a.Val == b.Val), nil },
 }
 
 // ------------------------------------------
@@ -63,6 +62,7 @@ func (e *Element) AsFloat() error {
 	default:
 		return errors.New("ArithmeticError: can only add numeric types")
 	}
+	e.Type = reflect.Float64
 	return nil
 }
 
@@ -85,8 +85,6 @@ func Op(e, x Element, op string) (Element, error) {
 	}
 
 	// Return no error
-	//fmt.Println(e)
-	//fmt.Println(x)
 	return Ops[op](e, x)
 }
 
@@ -111,7 +109,31 @@ func Mod(e, x Element) (Element, error) {
 }
 
 func Eq(e, x Element) (Element, error) {
-	return Op(e, x, "==")
+	// If one is nil, the other must also be nil.
+	False := New(false)
+	True := New(true)
+
+	if (e.Val == nil) != (x.Val == nil) {
+		return False, nil
+	}
+
+	if !reflect.DeepEqual(e, x) {
+
+		// Compare floats, which may have floating point precision errors
+		e_type := e.Type
+		x_type := x.Type
+		if e_type == reflect.Float32 || e_type == reflect.Float64 || x_type == reflect.Float32 || x_type == reflect.Float64 {
+			e.AsFloat()
+			x.AsFloat()
+			if math.Abs(e.Val.(float64) - x.Val.(float64)) > 1e-10 {
+				return False, nil
+			}
+		} else {
+			return False, nil
+		}
+	}
+
+	return True, nil
 }
 
 func Le(e, x Element) (Element, error) {
