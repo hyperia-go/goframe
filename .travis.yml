@@ -1,2 +1,14 @@
 language: go
-go_import_path: goframe
+
+# Only clone the most recent commit
+git:
+  depth: 1
+
+# Do not email the results of the build
+notifications:
+  email: false
+
+# Set GOPATH properly (as tests are contained in the SRC folder) and test with the race detector on
+script:
+  - export GOPATH=$GOPATH:`pwd`
+  - go test -v -race ./src/tests/
