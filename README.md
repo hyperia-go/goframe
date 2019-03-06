@@ -18,7 +18,7 @@ GoFrame has started as the brain child of two Australian Go developers. As stude
     `cd name/of/your/directory`
     
 3. Clone the repository \
-    `git fork git@github.com:<username>/goframe.git`
+    `git clone git@github.com:<username>/goframe.git`
 
 4. `cd` into the new directory \
     `cd goframe`
